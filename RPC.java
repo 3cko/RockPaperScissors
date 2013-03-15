@@ -4,6 +4,8 @@
  */
 
 import java.util.Scanner;
+import java.util.Random;
+
 
 public class RPC
 {
@@ -15,12 +17,25 @@ public class RPC
         {
             choice = getUserInput(choices);
         }
-        System.out.println(choice);
+        System.out.println(getNpcChoice(choices));
+        System.out.println(parseChoice(choices, choice));
     }
 
-//    public static String getNpcChoice()
-//    {
-//    }
+    public static int getNpcChoice(String[] range)
+    {
+        Random roll = new Random();
+        int r = roll.nextInt(range.length);
+        return r;
+    }
+
+    public static String parseChoice(String[] choices, String choice)
+    {
+        if (choice.length() == 1)
+        {
+            return "True";
+        }
+        return "false";
+    }
 //
 //    public static String doBattle(String PC, String NPC)
 //    {

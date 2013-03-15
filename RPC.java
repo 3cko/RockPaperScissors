@@ -36,22 +36,22 @@ public class RPC
             for (int x = 0; x < choices.length; x++)
             {
                 String to_match = choices[x].substring(0,1);
-                if (choice.equals(to_match))
-                {
-                    return choices[x];
-                }
+                if (choice.equals(to_match)) return choices[x];
+            }
+        } else {
+            for (int x = 0; x < choices.length; x++)
+            {
+                if (choice.equals(choices[x])) return choice;
             }
         }
+
         return "false";
     }
 
     public static String doBattle(String[] choices, String pc, String npc)
     {
         // Winner is +1, Loser is -1
-        if (pc.equals(npc))
-        {
-            return "tie";
-        } 
+        if (pc.equals(npc)) return "tie";
 
         for (int x = 0; x < choices.length; x++)
         {

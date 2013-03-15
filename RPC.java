@@ -56,21 +56,28 @@ public class RPC
         for (int x = 0; x < choices.length; x++)
         {
             //if pc matches choices[x]
-            //  if x == 0
-            //    if npc == choices[choices.length]
-            //      pc + 1
-            //    if npc == choices[x + 1]
-            //      npc + 1  
-            //  if x == (choices.length - 1)
-            //    if npc == choices[0]
-            //      pc + 1
-            //    if npc == choices[x - 1]
-            //      npc + 1
-            //  else
-            //    if npc == choices[x-1]
-            //      pc + 1
-            //    if npc == choices[x+1]
-            //      npc + 1
+            if (pc.equals(choices[x]))
+            {
+                // if x == 0
+                if (x == 0)
+                {
+                    // if npc == choices[choices.length]
+                    if (npc.equals(choices[choices.length - 1])) return "pc";
+                    // if npc == choices[x + 1]
+                    if (npc.equals(choices[x + 1])) return "npc";
+                // if x == (choices.length - 1)
+                } else if (x == (choices.length - 1)) {
+                    // if npc == choices[x - 1]
+                    if (npc.equals(choices[x - 1])) return "pc";
+                    // if npc == choices[0]
+                    if (npc.equals(choices[0])) return "npc";
+                } else {
+                    // if npc == choices[x-1]
+                    if (npc.equals(choices[x - 1])) return "pc";
+                    // if npc == choices[x+1]
+                    if (npc.equals(choices[x + 1])) return "npc";
+                }
+            }
         }
 
         return "wrong";

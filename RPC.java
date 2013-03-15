@@ -11,15 +11,46 @@ public class RPC
 {
     public static void main(String[] args)
     {
-        String [] choices = getChoices();
+        int round = 0;
+        int pc_score = 0;
+        int npc_score = 0;
+        int tie_score = 0;
+
+        String [] options = getChoices();
+        String npc = getNpcChoice(options);
+
+        System.out.println(getScoreBoard(pc_score, npc_score, 
+                                         tie_score, round));
+
         String choice = "false";
         while ("false".equals(choice))
         {
-            choice = getUserInput(choices);
+            choice = getUserInput(options);
         }
-        String npc = getNpcChoice(choices);
-        System.out.println(npc);
-        System.out.println(doBattle(choices, choice, npc));
+        
+        int score = getScore(doBattle(options, choice, npc));
+        
+        if (score == 0)
+        {
+            tie_score += 1;
+        } else if (score == 1) {
+            pc_score += 1;
+        } else {
+            npc_score += 1;
+        }
+
+    }
+
+    public static String getScoreBoard(int pc_score, int npc_score, 
+                                       int tie_score, int round)
+    {
+        String prep = "| Round: %d | Player Score: %d "
+                    + "| Comp Score: %d | Ties: %d |";
+        String formatted = String.format(prep, round, pc_score, 
+                                         npc_score, tie_score);
+
+        return formatted;
+
     }
 
     public static String getNpcChoice(String[] choices)
@@ -46,6 +77,13 @@ public class RPC
         }
 
         return "false";
+    }
+
+    public static int getScore(String score)
+    {
+        if ("tie".equals(score)) return 0;
+        int winner = ("pc".equals(score)) ? 1 : 2;
+        return winner;
     }
 
     public static String doBattle(String[] choices, String pc, String npc)
@@ -79,9 +117,7 @@ public class RPC
                 }
             }
         }
-
         return "wrong";
-
     }
 
     public static String getUserInput(String[] valid)
@@ -92,7 +128,8 @@ public class RPC
         
         choice = choice.toLowerCase();
         choice = parseChoice(valid, choice);
-
+        // close scanner
+        input.close();
         if (choice.equals("false"))
         {
             System.out.println("Invalid choice! Try again.");

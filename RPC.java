@@ -17,14 +17,16 @@ public class RPC
         {
             choice = getUserInput(choices);
         }
-        //System.out.println(getNpcChoice(choices));
+        String npc = getNpcChoice(choices);
+        System.out.println(npc);
+        System.out.println(doBattle(choices, choice, npc));
     }
 
-    public static int getNpcChoice(String[] range)
+    public static String getNpcChoice(String[] choices)
     {
         Random roll = new Random();
-        int r = roll.nextInt(range.length);
-        return r;
+        int r = roll.nextInt(choices.length);
+        return choices[r];
     }
 
     public static String parseChoice(String[] choices, String choice)
@@ -43,10 +45,37 @@ public class RPC
         return "false";
     }
 
-//
-//    public static String doBattle(String PC, String NPC)
-//    {
-//    }
+    public static String doBattle(String[] choices, String pc, String npc)
+    {
+        // Winner is +1, Loser is -1
+        if (pc.equals(npc))
+        {
+            return "tie";
+        } 
+
+        for (int x = 0; x < choices.length; x++)
+        {
+            //if pc matches choices[x]
+            //  if x == 0
+            //    if npc == choices[choices.length]
+            //      pc + 1
+            //    if npc == choices[x + 1]
+            //      npc + 1  
+            //  if x == (choices.length - 1)
+            //    if npc == choices[0]
+            //      pc + 1
+            //    if npc == choices[x - 1]
+            //      npc + 1
+            //  else
+            //    if npc == choices[x-1]
+            //      pc + 1
+            //    if npc == choices[x+1]
+            //      npc + 1
+        }
+
+        return "wrong";
+
+    }
 
     public static String getUserInput(String[] valid)
     {

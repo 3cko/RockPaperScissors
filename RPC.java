@@ -17,8 +17,7 @@ public class RPC
         {
             choice = getUserInput(choices);
         }
-        System.out.println(getNpcChoice(choices));
-        System.out.println(parseChoice(choices, choice));
+        //System.out.println(getNpcChoice(choices));
     }
 
     public static int getNpcChoice(String[] range)
@@ -32,10 +31,18 @@ public class RPC
     {
         if (choice.length() == 1)
         {
-            return "True";
+            for (int x = 0; x < choices.length; x++)
+            {
+                String to_match = choices[x].substring(0,1);
+                if (choice.equals(to_match))
+                {
+                    return choices[x];
+                }
+            }
         }
         return "false";
     }
+
 //
 //    public static String doBattle(String PC, String NPC)
 //    {
@@ -46,21 +53,22 @@ public class RPC
         Scanner input = new Scanner(System.in);
         System.out.print("[R]ock, [P]aper, [S]cissors (Choose One): ");
         String choice = input.next();
+        
         choice = choice.toLowerCase();
-        for (int x = 0; x < valid.length; x++)
+        choice = parseChoice(valid, choice);
+
+        if (choice.equals("false"))
         {
-            if (choice.equals(valid[x]))
-            {
-                return choice;
-            }
+            System.out.println("Invalid choice! Try again.");
+            return "false";
         }
-        System.out.println("Invalid choice! Try again.");
-        return "false";
+        
+        return choice;
     }
 
     public static String[] getChoices()
     {
-        String[] choices = {"r", "rock", "p", "paper", "s", "scissors"};
+        String[] choices = {"rock", "paper", "scissors"};
         return choices;
     }
 }

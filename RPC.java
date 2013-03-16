@@ -20,7 +20,7 @@ public class RPC
         
         // silly bug, player wins when they read 5
         // computer wins when they hit 4
-        while ((npc_score < 3) || (pc_score < 3))
+        while ((npc_score < 3) && (pc_score < 3))
         {
             String npc = getNpcChoice(options);
 

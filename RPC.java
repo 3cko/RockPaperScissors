@@ -58,6 +58,10 @@ public class RPC
         } else {
             System.out.println("You won best 3 out of 5!");
         }
+        System.out.println("");
+        System.out.println("Final Score:");
+        System.out.println("You: " + pc_score);
+        System.out.println("Computer: " + npc_score);
 
     }
 
@@ -148,6 +152,7 @@ public class RPC
     {
         Scanner input = new Scanner(System.in);
         // should probably generate this from the array
+        System.out.println("");
         System.out.print("[R]ock, [P]aper, [S]cissors (Choose One): ");
         String choice = input.next();
         

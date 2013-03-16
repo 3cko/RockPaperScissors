@@ -17,26 +17,46 @@ public class RPC
         int tie_score = 0;
 
         String [] options = getChoices();
-        String npc = getNpcChoice(options);
-
-        System.out.println(getScoreBoard(pc_score, npc_score, 
-                                         tie_score, round));
-
-        String choice = "false";
-        while ("false".equals(choice))
+        
+        // silly bug, player wins when they read 5
+        // computer wins when they hit 4
+        while ((npc_score < 3) || (pc_score < 3))
         {
-            choice = getUserInput(options);
+            String npc = getNpcChoice(options);
+
+            System.out.println(getScoreBoard(pc_score, npc_score, 
+                                             tie_score, round));
+
+            String choice = "false";
+            // try catch might be better suited here
+            while ("false".equals(choice))
+            {
+                choice = getUserInput(options);
+            }
+            
+            // do our battles and return the winner numerically
+            int score = getScore(doBattle(options, choice, npc));
+            
+            // scoring, 0 == tie, 1 == pc, 2 == npc
+            if (score == 0)
+            {
+                tie_score += 1;
+            } else if (score == 1) {
+                pc_score += 1;
+            } else {
+                npc_score += 1;
+            }
+            // increment round
+            round++;
         }
-        
-        int score = getScore(doBattle(options, choice, npc));
-        
-        if (score == 0)
+
+        // game over
+        System.out.print("Game Over: ");
+        if (npc_score == 3)
         {
-            tie_score += 1;
-        } else if (score == 1) {
-            pc_score += 1;
+            System.out.println("Computer won best 3 out of 5!");
         } else {
-            npc_score += 1;
+            System.out.println("You won best 3 out of 5!");
         }
 
     }
@@ -44,8 +64,10 @@ public class RPC
     public static String getScoreBoard(int pc_score, int npc_score, 
                                        int tie_score, int round)
     {
+        // format our scoreboard!
         String prep = "| Round: %d | Player Score: %d "
                     + "| Comp Score: %d | Ties: %d |";
+
         String formatted = String.format(prep, round, pc_score, 
                                          npc_score, tie_score);
 
@@ -55,6 +77,7 @@ public class RPC
 
     public static String getNpcChoice(String[] choices)
     {
+        // roll against the length of the options array
         Random roll = new Random();
         int r = roll.nextInt(choices.length);
         return choices[r];
@@ -91,9 +114,10 @@ public class RPC
         // Winner is +1, Loser is -1
         if (pc.equals(npc)) return "tie";
 
+        // all comments below are pseudo code that saved my ass
         for (int x = 0; x < choices.length; x++)
         {
-            //if pc matches choices[x]
+            // if pc matches choices[x]
             if (pc.equals(choices[x]))
             {
                 // if x == 0
@@ -123,13 +147,12 @@ public class RPC
     public static String getUserInput(String[] valid)
     {
         Scanner input = new Scanner(System.in);
+        // should probably generate this from the array
         System.out.print("[R]ock, [P]aper, [S]cissors (Choose One): ");
         String choice = input.next();
         
         choice = choice.toLowerCase();
         choice = parseChoice(valid, choice);
-        // close scanner
-        input.close();
         if (choice.equals("false"))
         {
             System.out.println("Invalid choice! Try again.");
